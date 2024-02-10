@@ -1,0 +1,8 @@
+﻿@page "/countingpage/{Id:int}"
+@inject NavigationManager NavigationManager
+<h3>CountingPage @Id</h3>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+}
