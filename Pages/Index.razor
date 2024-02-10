@@ -1,9 +1,43 @@
 ﻿@page "/"
 
+@inject IStringLocalizer<IndexPage> Loc
+
 <PageTitle>Index</PageTitle>
+<h1 style="text-align:center;">@Loc["Greeting"]</h1>
+<h2 style="text-align:center;"><a href="/constructor">@Loc["Create"]</a></h2>
+<h3 style="text-align:center;">@Loc["Or"]</h3>
+<h2 style="text-align:center;">@Loc["Gallery"]</h2>
 
-<h1>Hello, world!</h1>
+<ul class="task-cards">
+    @if (problem != 0)
+    {
+        @* @foreach (Problems pr in problem)
+        {
+            <li style="background-image: url('@images.Find(p => p.Id == pr.ImageId).Description'); ">
+                <a href="/task/@pr.Id">
+                    <div class="task-info">
+                        <span class="title">@pr.Name</span>
+                        <span class="title">@pr.Subject</span>
+                    </div>
+                </a>
+            </li>
+        } *@
+    }
+</ul>
 
-Welcome to your new app.
+@code{
+    [Parameter]
+    public string Culture { get; set; }
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    private bool onHoover = false;
+    private string text, url = "/task/";
+    int problem = 0;
+    //private List<Problems> problem = new();
+    //private List<Image> images;
+    // protected override async Task OnInitializedAsync()
+    // {
+
+    //     problem = await HttpClient.GetFromJsonAsync<List<Problems>>(NavigationManager.BaseUri + "api/problems");
+    //     images = await HttpClient.GetFromJsonAsync<List<Image>>(NavigationManager.BaseUri + "api/images");
+    // }
+}

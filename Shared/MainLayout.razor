@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@using System.Globalization
 
+@inject IStringLocalizer<Shared.LocalizationFiles.MainLayoutPage> Loc
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -7,6 +9,7 @@
 
     <main>
         <div class="top-row px-4">
+            <PictureTrainer.Shared.CultureSelector />
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 
