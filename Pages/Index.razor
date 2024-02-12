@@ -1,5 +1,5 @@
 ﻿@page "/"
-
+@inject HttpClient http
 @inject IStringLocalizer<IndexPage> Loc
 
 <PageTitle>Index</PageTitle>
@@ -7,11 +7,12 @@
 <h2 style="text-align:center;"><a href="/constructor">@Loc["Create"]</a></h2>
 <h3 style="text-align:center;">@Loc["Or"]</h3>
 <h2 style="text-align:center;">@Loc["Gallery"]</h2>
+<p>@text</p>
 
 <ul class="task-cards">
-    @if (problem != 0)
+    @* @if (problem.Count != 0)
     {
-        @* @foreach (Problems pr in problem)
+        @foreach (Problems pr in problem)
         {
             <li style="background-image: url('@images.Find(p => p.Id == pr.ImageId).Description'); ">
                 <a href="/task/@pr.Id">
@@ -21,8 +22,8 @@
                     </div>
                 </a>
             </li>
-        } *@
-    }
+        }
+    } *@
 </ul>
 
 @code{
@@ -31,13 +32,33 @@
 
     private bool onHoover = false;
     private string text, url = "/task/";
-    int problem = 0;
-    //private List<Problems> problem = new();
-    //private List<Image> images;
-    // protected override async Task OnInitializedAsync()
-    // {
 
-    //     problem = await HttpClient.GetFromJsonAsync<List<Problems>>(NavigationManager.BaseUri + "api/problems");
-    //     images = await HttpClient.GetFromJsonAsync<List<Image>>(NavigationManager.BaseUri + "api/images");
-    // }
+    private List<Problems> problem;
+    private List<Image> images;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://api.cloudflare.com/client/v4/accounts/4411ee06c69c6b9ab4bdfad42402a438/d1/database/288ed470-8bb8-471a-98f2-b9eba8c04c22"),
+                Headers =
+{
+
+    { "Authorization", "Bearer r8sUndKgzr85YjrixTUZgfG8UwmYURr_O29us-O-" },
+
+            },
+            };
+        //request.SetBrowserRequestMode(BrowserRequestMode.NoCors);
+        request.SetBrowserRequestCache(BrowserRequestCache.NoStore);
+        using (var response = await http.SendAsync(request))
+        {
+            text = response.StatusCode.ToString();
+            //var body = await response.Content.ReadAsStringAsync();
+            //Console.WriteLine(body);
+        }
+        base.OnInitializedAsync();
+    }
 }

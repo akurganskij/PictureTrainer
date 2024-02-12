@@ -30,7 +30,7 @@
 //        [HttpPost]
 //        public async Task<ActionResult<Problems>> Post(Problems problems)
 //        {
-//            if(problems == null) return BadRequest(problems);
+//            if (problems == null) return BadRequest(problems);
 //            await dbContext.problems.AddAsync(problems);
 //            await dbContext.SaveChangesAsync();
 //            return Ok(problems);

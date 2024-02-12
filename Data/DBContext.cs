@@ -9,10 +9,9 @@ public class DBContext : DbContext
     public DbSet<Tasks> tasks { get; set; } = null!;
 	public DbSet<Problems> problems { get; set; } = null!;
 
-	/*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	=> optionsBuilder
-	.UseSqlite("Data Source=cloud.db");
-	*/
+	//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	//=> optionsBuilder.UseSqlite("Data Source=image.db");
+
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 		modelBuilder.Entity<Problems>().ToTable("Problems");
